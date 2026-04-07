@@ -1,197 +1,154 @@
 # Plantilla Codex Multiagente
 
-Repositorio base para trabajar con Codex usando un agente orquestador y agentes especializados por dominio, con instrucciones persistentes basadas en `AGENTS.md` y soporte para colaboración sobre GitHub.
+Repositorio base para trabajar con Codex con una estructura orientada a proyectos y agentes reutilizables.
 
-## Qué resuelve
+## Idea principal
 
-Esta plantilla está pensada para desarrollar aplicaciones de varios tipos manteniendo una misma disciplina de trabajo:
+Esta plantilla separa dos conceptos:
 
-- un agente orquestador en la raíz interpreta la petición, organiza el trabajo y decide el dominio adecuado
-- cada dominio técnico tiene instrucciones locales para que Codex adapte arquitectura, validaciones y estilo
-- GitHub se usa como fuente de verdad para commits, ramas, pull requests y revisiones
+- `projects/`: productos reales, cada uno con su contexto y su orquestador
+- `agents/`: especialistas reutilizables que aportan conocimiento y reglas de ejecución
 
-## Cómo funciona `AGENTS.md`
+El proyecto es la unidad principal de trabajo. Los agentes no contienen proyectos; resuelven tareas concretas cuando el orquestador del proyecto los necesita.
 
-La plantilla sigue el enfoque recomendado por OpenAI para Codex:
-
-- `AGENTS.md` en la raíz define reglas globales del repositorio
-- cada subdirectorio especializado puede tener su propio `AGENTS.md`
-- cuanto más cerca esté el archivo de instrucciones del código que se está editando, más específica será la guía que aplicará Codex
-
-En esta plantilla eso se traduce en:
-
-- [AGENTS.md](/Users/antonio/Codex/template/AGENTS.md): agente orquestador
-- [domains/ios-swiftui-mvvm-uikit/AGENTS.md](/Users/antonio/Codex/template/domains/ios-swiftui-mvvm-uikit/AGENTS.md): agente iOS
-- [domains/odoo16-python-xmlrpc/AGENTS.md](/Users/antonio/Codex/template/domains/odoo16-python-xmlrpc/AGENTS.md): agente Odoo
-
-## Estructura del repositorio
+## Estructura
 
 ```text
-.
-├── AGENTS.md
-├── .github/
-├── docs/
-├── domains/
-│   ├── ios-swiftui-mvvm-uikit/
-│   │   ├── AGENTS.md
-│   │   ├── projects/
-│   │   └── templates/
-│   └── odoo16-python-xmlrpc/
-│       ├── AGENTS.md
-│       ├── projects/
-│       └── templates/
-├── playbooks/
-└── specs/
+repo/
+  AGENTS.md
+  agents/
+    ios-swiftui/
+      AGENTS.md
+    odoo-python/
+      AGENTS.md
+    testing-qa/
+      AGENTS.md
+  projects/
+    project-a/
+      AGENTS.md
+      app/
+      backend/
+    project-b/
+      AGENTS.md
+  playbooks/
+  specs/
 ```
 
-## Componentes principales
+## Cómo se comporta Codex
 
-### Orquestador
+Codex debe:
 
-El orquestador vive en la raíz del repositorio y se encarga de:
+- leer `AGENTS.md` desde la raíz hasta el directorio actual
+- priorizar las instrucciones más cercanas al código
+- tratar el `AGENTS.md` del proyecto activo como fuente principal de decisión
+- aplicar las reglas del agente especialista cuando el orquestador del proyecto lo indique
 
-- leer el contexto general del proyecto
-- detectar el dominio técnico
-- dividir el trabajo en pasos
-- aplicar el `AGENTS.md` especializado cuando el código cae dentro de un dominio concreto
+## Modelo de trabajo
 
-### Agente iOS
+### 1. Reglas globales
 
-El dominio [domains/ios-swiftui-mvvm-uikit](/Users/antonio/Codex/template/domains/ios-swiftui-mvvm-uikit) está preparado para:
+El archivo [AGENTS.md](/Users/antonio/Codex/template/AGENTS.md) define:
 
-- apps Apple con SwiftUI
-- patrón MVVM
-- uso puntual de UIKit cuando esté justificado
-- estructura orientada a Xcode
+- principios globales del repositorio
+- separación entre proyectos y agentes
+- reglas comunes de Git, revisión y organización
 
-Los proyectos iOS deben crearse bajo:
+### 2. Orquestador por proyecto
+
+Cada proyecto debe tener su propio:
 
 ```text
-domains/ios-swiftui-mvvm-uikit/projects/<nombre-del-proyecto>/
+projects/<project>/AGENTS.md
 ```
 
-### Agente Odoo
+Ese archivo decide:
 
-El dominio [domains/odoo16-python-xmlrpc](/Users/antonio/Codex/template/domains/odoo16-python-xmlrpc) está preparado para:
+- el objetivo del proyecto
+- qué agente usar
+- cómo dividir el trabajo
+- qué criterios de validación aplicar
 
-- integraciones con Odoo v16
-- Python
-- XML-RPC
-- separación entre configuración, cliente, servicios y casos de uso
+### 3. Agentes especialistas reutilizables
 
-Los proyectos Odoo deben crearse bajo:
+Cada agente vive en:
 
 ```text
-domains/odoo16-python-xmlrpc/projects/<nombre-del-proyecto>/
+agents/<agent>/AGENTS.md
 ```
+
+Su responsabilidad es resolver tareas específicas del dominio.
+
+Agentes incluidos:
+
+- [agents/ios-swiftui/AGENTS.md](/Users/antonio/Codex/template/agents/ios-swiftui/AGENTS.md)
+- [agents/odoo-python/AGENTS.md](/Users/antonio/Codex/template/agents/odoo-python/AGENTS.md)
+- [agents/testing-qa/AGENTS.md](/Users/antonio/Codex/template/agents/testing-qa/AGENTS.md)
+
+## Relación entre componentes
+
+```text
+Petición del usuario
+  ↓
+AGENTS.md del proyecto
+  ↓
+Selección del agente especialista
+  ↓
+Aplicación de reglas del agente
+  ↓
+Implementación y validación
+```
+
+## Proyectos de ejemplo
+
+La plantilla incluye dos proyectos base:
+
+- [projects/project-a/AGENTS.md](/Users/antonio/Codex/template/projects/project-a/AGENTS.md)
+- [projects/project-b/AGENTS.md](/Users/antonio/Codex/template/projects/project-b/AGENTS.md)
+
+`project-a` incluye carpetas `app/` y `backend/` para mostrar un caso con frontend y backend.
 
 ## Flujo recomendado
 
-### 1. Definir el proyecto
+### Crear un proyecto nuevo
 
-Crea un spec en:
+1. Crear `projects/<nombre>/`
+2. Añadir `projects/<nombre>/AGENTS.md`
+3. Añadir el código del proyecto bajo ese árbol
+4. Definir o enlazar el spec correspondiente en `specs/`
 
-```text
-specs/<nombre-del-proyecto>/README.md
-```
+### Ejecutar trabajo con Codex
 
-El spec debe incluir como mínimo:
-
-- objetivo funcional
-- requisitos técnicos
-- restricciones
-- entregables
-- criterio de validación
-
-### 2. Pedir trabajo al orquestador
-
-Ejecuta Codex en la raíz del repositorio y usa un prompt que indique:
-
-- qué quieres construir
-- en qué dominio
-- dónde debe quedar el código
-- qué spec debe tomar como referencia
-
-Ejemplo iOS:
+Prompt orientado a proyecto:
 
 ```text
-Diseña la arquitectura y crea el esqueleto inicial para una app iOS en domains/ios-swiftui-mvvm-uikit/projects/ExpenseTracker usando el spec specs/expense-tracker/README.md
+Trabaja sobre projects/project-a. Lee su AGENTS.md, decide si necesitas ios-swiftui, odoo-python o testing-qa, y aplica el agente adecuado para implementar la tarea.
 ```
 
-Ejemplo Odoo:
+Prompt para una tarea iOS:
 
 ```text
-Implementa un conector XML-RPC para Odoo v16 en domains/odoo16-python-xmlrpc/projects/sales-sync usando el spec specs/sales-sync/README.md
+En projects/project-a/app, implementa la pantalla inicial siguiendo el AGENTS.md del proyecto y las reglas del agente agents/ios-swiftui.
 ```
 
-### 3. Trabajar dentro del dominio
-
-Cuando el trabajo cae dentro de un dominio especializado:
-
-- Codex debe respetar el `AGENTS.md` de la raíz
-- además debe aplicar las reglas del `AGENTS.md` del dominio
-- las validaciones y la estructura deben seguir el stack del dominio
-
-### 4. Validar
-
-Cada dominio define su validación mínima:
-
-- iOS: compilación o comprobación de tipos y pruebas básicas de `ViewModel` y servicios
-- Odoo: validación de imports, sintaxis, configuración y pruebas unitarias donde aplique
-
-## Modelos recomendados
-
-Tomando como referencia la documentación de OpenAI para Codex y modelos:
-
-- orquestador: `gpt-5.4`
-- agentes especializados: `gpt-5.4`
-- exploración, lectura, análisis auxiliar o tareas acotadas: `gpt-5.4-mini`
-
-## GitHub y colaboración
-
-Este repositorio está preparado para un flujo clásico con GitHub:
-
-1. crear rama por trabajo
-2. hacer commits pequeños
-3. abrir pull request
-4. usar revisión asistida por Codex
-
-Convenciones recomendadas:
-
-- `feat/<nombre>`
-- `fix/<nombre>`
-- `chore/<nombre>`
-
-Plantillas y apoyo:
-
-- [playbooks/github-setup.md](/Users/antonio/Codex/template/playbooks/github-setup.md)
-- [.github/PULL_REQUEST_TEMPLATE.md](/Users/antonio/Codex/template/.github/PULL_REQUEST_TEMPLATE.md)
-
-## Casos de uso incluidos
-
-La plantilla ya incluye ejemplos de especificación en:
-
-- [specs/example-ios-app/README.md](/Users/antonio/Codex/template/specs/example-ios-app/README.md)
-- [specs/example-odoo-module/README.md](/Users/antonio/Codex/template/specs/example-odoo-module/README.md)
-
-## Archivos importantes
-
-- [AGENTS.md](/Users/antonio/Codex/template/AGENTS.md): reglas globales del repositorio
-- [docs/openai-notes.md](/Users/antonio/Codex/template/docs/openai-notes.md): resumen de las notas aplicadas desde la documentación oficial
-- [playbooks/new-project.md](/Users/antonio/Codex/template/playbooks/new-project.md): guía rápida para iniciar un proyecto nuevo
-
-## Primeros pasos
-
-```bash
-git checkout -b feat/mi-primer-proyecto
-```
+Prompt para una tarea backend:
 
 ```text
-Crea el proyecto <nombre> dentro de domains/<dominio>/projects/<nombre> usando el spec specs/<nombre>/README.md. Respeta el AGENTS.md de la raíz y el del dominio.
+En projects/project-a/backend, implementa la integración con Odoo siguiendo el AGENTS.md del proyecto y las reglas del agente agents/odoo-python.
 ```
+
+## Reglas importantes
+
+- No asumir que una carpeta equivale a un agente.
+- No tomar decisiones fuera del dominio del agente activo.
+- Mantener separadas las responsabilidades de proyecto y agente.
+- Mantener los `AGENTS.md` cortos, claros y accionables.
+
+## GitHub
+
+El repositorio está preparado para trabajar con ramas y pull requests. La guía operativa está en [playbooks/github-setup.md](/Users/antonio/Codex/template/playbooks/github-setup.md) y la plantilla de PR en [.github/PULL_REQUEST_TEMPLATE.md](/Users/antonio/Codex/template/.github/PULL_REQUEST_TEMPLATE.md).
 
 ## Referencias
 
 - `agents.md`: https://agents.md
 - guía de OpenAI sobre `AGENTS.md`: https://developers.openai.com/codex/guides/agents-md
-- integración de Codex con GitHub: https://developers.openai.com/codex/integrations/github
+- buenas prácticas de Codex: https://developers.openai.com/codex/learn/best-practices

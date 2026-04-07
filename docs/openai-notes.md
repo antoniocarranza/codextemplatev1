@@ -10,6 +10,7 @@
 
 ## Criterio de esta plantilla
 
-- Orquestación en raíz.
-- Especialización por dominio con `AGENTS.md` locales.
+- Reglas globales en raíz.
+- Orquestación por proyecto en `projects/<nombre>/AGENTS.md`.
+- Especialización reutilizable en `agents/<nombre>/AGENTS.md`.
 - GitHub como soporte de revisión y colaboración.

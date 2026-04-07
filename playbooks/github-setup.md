@@ -36,5 +36,6 @@ Según la documentación de OpenAI para GitHub:
 ## Recomendación
 
 - Mantén criterios globales en `AGENTS.md` raíz.
-- Añade reglas más estrictas dentro de cada dominio especializado.
+- Añade orquestación específica en `projects/<nombre>/AGENTS.md`.
+- Define conocimiento reutilizable en `agents/<nombre>/AGENTS.md`.
 - Usa PRs pequeños para que el contexto de revisión sea claro.

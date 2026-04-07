@@ -2,36 +2,35 @@
 
 ## Rol
 
-Eres el agente orquestador de este repositorio plantilla. Tu función es convertir una petición de producto en trabajo ejecutable, enrutarla al dominio correcto y mantener consistencia entre arquitectura, estándares y entregables.
+Este archivo define las reglas globales del repositorio. El repositorio está organizado por proyectos y agentes reutilizables.
 
-## Responsabilidades
+## Principios
 
-- Identificar el dominio principal del trabajo.
-- Descomponer el objetivo en pasos pequeños y verificables.
-- Mantener separación clara entre especificación, implementación y validación.
-- Usar la instrucción especializada más cercana al código cuando exista un `AGENTS.md` más específico.
-- Priorizar cambios mínimos y coherentes con el stack de cada dominio.
+- El proyecto es la unidad principal de trabajo.
+- Los agentes son capacidades reutilizables, no contenedores de proyectos.
+- La orquestación ocurre dentro de cada proyecto.
+- Codex debe leer `AGENTS.md` desde la raíz hasta el directorio actual y priorizar las instrucciones más cercanas al código.
 
-## Dominios disponibles
+## Estructura esperada
 
-- `domains/ios-swiftui-mvvm-uikit/`
-- `domains/odoo16-python-xmlrpc/`
+- `agents/`: agentes especialistas reutilizables.
+- `projects/`: productos reales.
+- `projects/<project>/AGENTS.md`: orquestador del proyecto.
+- `agents/<agent>/AGENTS.md`: reglas del agente especialista.
 
-## Flujo obligatorio
+## Reglas de decisión
 
-1. Leer el spec del proyecto si existe en `specs/<proyecto>/`.
-2. Identificar dominio y carpeta objetivo.
-3. Crear o actualizar un plan corto.
-4. Implementar dentro del dominio correspondiente.
-5. Ejecutar validaciones del dominio.
-6. Resumir resultado, riesgos y siguientes pasos.
+- Tomar como fuente principal de decisión el `AGENTS.md` del proyecto activo.
+- Usar un agente especialista solo cuando el orquestador del proyecto lo indique o cuando el árbol de trabajo caiga dentro de su ámbito.
+- No mezclar contexto de un proyecto con otro.
+- No asumir que una carpeta equivale a un agente.
 
 ## Reglas de organización
 
-- No mezclar código de dominios distintos en el mismo árbol.
-- Guardar documentación funcional en `specs/`.
+- Mantener separados proyectos, agentes y documentación.
+- Guardar especificaciones funcionales en `specs/`.
 - Guardar playbooks reutilizables en `playbooks/`.
-- Crear proyectos reales dentro de `domains/<dominio>/projects/<nombre>/`.
+- Crear el código real dentro de `projects/<nombre>/`.
 
 ## Convenciones de Git
 
@@ -42,15 +41,13 @@ Eres el agente orquestador de este repositorio plantilla. Tu función es convert
 
 ## Revisión
 
-- Tratar regresiones funcionales, seguridad y pérdida de mantenibilidad como prioridad alta.
-- Si el trabajo afecta a un dominio especializado, aplicar también sus reglas locales.
+- Priorizar regresiones funcionales, seguridad y mantenibilidad.
+- Aplicar las reglas del proyecto activo y, si procede, las del agente especialista involucrado.
 
-## Instrucciones para prompts
-
-Cuando falte contexto, pedir o inferir:
+## Contexto mínimo a inferir o pedir
 
 - nombre del proyecto
-- dominio técnico
 - objetivo funcional
+- agente o dominio técnico implicado
 - restricciones de arquitectura
 - criterio de validación
