@@ -19,6 +19,8 @@ repo/
   agents/
     ios-swiftui/
       AGENTS.md
+    swiftui-views/
+      AGENTS.md
     odoo-python/
       AGENTS.md
     testing-qa/
@@ -81,6 +83,7 @@ Su responsabilidad es resolver tareas específicas del dominio.
 Agentes incluidos:
 
 - [agents/ios-swiftui/AGENTS.md](/Users/antonio/Codex/template/agents/ios-swiftui/AGENTS.md)
+- [agents/swiftui-views/AGENTS.md](/Users/antonio/Codex/template/agents/swiftui-views/AGENTS.md)
 - [agents/odoo-python/AGENTS.md](/Users/antonio/Codex/template/agents/odoo-python/AGENTS.md)
 - [agents/testing-qa/AGENTS.md](/Users/antonio/Codex/template/agents/testing-qa/AGENTS.md)
 
@@ -121,13 +124,19 @@ La plantilla incluye dos proyectos base:
 Prompt orientado a proyecto:
 
 ```text
-Trabaja sobre projects/project-a. Lee su AGENTS.md, decide si necesitas ios-swiftui, odoo-python o testing-qa, y aplica el agente adecuado para implementar la tarea.
+Trabaja sobre projects/project-a. Lee su AGENTS.md, decide si necesitas ios-swiftui, swiftui-views, odoo-python o testing-qa, y aplica el agente adecuado para implementar la tarea.
 ```
 
 Prompt para una tarea iOS:
 
 ```text
 En projects/project-a/app, implementa la pantalla inicial siguiendo el AGENTS.md del proyecto y las reglas del agente agents/ios-swiftui.
+```
+
+Prompt para una vista SwiftUI reutilizable:
+
+```text
+En projects/project-a/app, crea una vista SwiftUI reutilizable siguiendo el AGENTS.md del proyecto y las reglas del agente agents/swiftui-views. La vista debe incluir siempre #Preview.
 ```
 
 Prompt para una tarea backend:
