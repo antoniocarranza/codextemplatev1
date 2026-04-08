@@ -19,6 +19,8 @@ repo/
   agents/
     ios-swiftui/
       AGENTS.md
+    project-documentation/
+      AGENTS.md
     swiftui-views/
       AGENTS.md
     odoo-python/
@@ -83,6 +85,7 @@ Su responsabilidad es resolver tareas específicas del dominio.
 Agentes incluidos:
 
 - [agents/ios-swiftui/AGENTS.md](/Users/antonio/Codex/template/agents/ios-swiftui/AGENTS.md)
+- [agents/project-documentation/AGENTS.md](/Users/antonio/Codex/template/agents/project-documentation/AGENTS.md)
 - [agents/swiftui-views/AGENTS.md](/Users/antonio/Codex/template/agents/swiftui-views/AGENTS.md)
 - [agents/odoo-python/AGENTS.md](/Users/antonio/Codex/template/agents/odoo-python/AGENTS.md)
 - [agents/testing-qa/AGENTS.md](/Users/antonio/Codex/template/agents/testing-qa/AGENTS.md)
@@ -124,7 +127,7 @@ La plantilla incluye dos proyectos base:
 Prompt orientado a proyecto:
 
 ```text
-Trabaja sobre projects/project-a. Lee su AGENTS.md, decide si necesitas ios-swiftui, swiftui-views, odoo-python o testing-qa, y aplica el agente adecuado para implementar la tarea.
+Trabaja sobre projects/project-a. Lee su AGENTS.md, decide si necesitas ios-swiftui, swiftui-views, odoo-python, project-documentation o testing-qa, y aplica el agente adecuado para implementar la tarea.
 ```
 
 Prompt para una tarea iOS:
@@ -145,6 +148,12 @@ Prompt para una tarea backend:
 En projects/project-a/backend, implementa la integración con Odoo siguiendo el AGENTS.md del proyecto y las reglas del agente agents/odoo-python.
 ```
 
+Prompt para documentación:
+
+```text
+Actualiza la documentación del repositorio siguiendo el agente agents/project-documentation y deja el resultado en un único archivo Markdown.
+```
+
 ## Reglas importantes
 
 - No asumir que una carpeta equivale a un agente.
@@ -155,6 +164,18 @@ En projects/project-a/backend, implementa la integración con Odoo siguiendo el 
 ## GitHub
 
 El repositorio está preparado para trabajar con ramas y pull requests. La guía operativa está en [playbooks/github-setup.md](/Users/antonio/Codex/template/playbooks/github-setup.md) y la plantilla de PR en [.github/PULL_REQUEST_TEMPLATE.md](/Users/antonio/Codex/template/.github/PULL_REQUEST_TEMPLATE.md).
+
+## Documentación automática
+
+La documentación consolidada del repositorio se genera en:
+
+- [docs/PROJECT_DOCUMENTATION.md](/Users/antonio/Codex/template/docs/PROJECT_DOCUMENTATION.md)
+
+El archivo se regenera antes de cada commit mediante:
+
+- [agents/project-documentation/AGENTS.md](/Users/antonio/Codex/template/agents/project-documentation/AGENTS.md)
+- [scripts/generate_project_docs.py](/Users/antonio/Codex/template/scripts/generate_project_docs.py)
+- [.githooks/pre-commit](/Users/antonio/Codex/template/.githooks/pre-commit)
 
 ## Referencias
 

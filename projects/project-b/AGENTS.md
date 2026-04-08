@@ -12,6 +12,7 @@ Entender el objetivo del proyecto, seleccionar el agente adecuado y mantener coh
 
 - Elegir el agente más específico para cada tarea.
 - Para vistas o componentes SwiftUI, priorizar `agents/swiftui-views`.
+- Para documentación del proyecto, priorizar `agents/project-documentation`.
 - Si una tarea afecta a validación o pruebas, usar `agents/testing-qa`.
 - Si una tarea mezcla varios ámbitos, resolver primero la parte dominante y validar después.
 

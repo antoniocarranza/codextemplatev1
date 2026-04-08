@@ -11,5 +11,5 @@
 ## Prompt base
 
 ```text
-Crea el proyecto <nombre> dentro de projects/<nombre>. Añade un AGENTS.md de orquestación para el proyecto, usa el spec specs/<nombre>/README.md y decide si necesitas los agentes ios-swiftui, swiftui-views, odoo-python o testing-qa.
+Crea el proyecto <nombre> dentro de projects/<nombre>. Añade un AGENTS.md de orquestación para el proyecto, usa el spec specs/<nombre>/README.md y decide si necesitas los agentes ios-swiftui, swiftui-views, odoo-python, project-documentation o testing-qa.
 ```

@@ -13,6 +13,7 @@ Coordinar el trabajo del proyecto y decidir qué agente reutilizable debe actuar
 - Para trabajo de interfaz iOS o arquitectura de app, usar `agents/ios-swiftui`.
 - Para vistas SwiftUI, componentes visuales reutilizables o composición de pantallas, usar `agents/swiftui-views`.
 - Para trabajo backend o integración con Odoo, usar `agents/odoo-python`.
+- Para generar o actualizar documentación del proyecto, usar `agents/project-documentation`.
 - Para validación, regresiones o diseño de pruebas, usar `agents/testing-qa`.
 
 ## Reglas del proyecto

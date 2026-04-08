@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+python3 scripts/generate_project_docs.py
+git add docs/PROJECT_DOCUMENTATION.md
